@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 namespace Input
 {
     [System.Serializable]
-    public class PlayerInput : IInput,IDisposable
+    public class PlayerInput :IDisposable
     {
-        private InputData _inputData;
+   
         private Vector2 startPosition;
         private float startTime;
 
@@ -18,14 +18,13 @@ namespace Input
         [SerializeField] private float maxSwipeTime = 1f;
         [SerializeField] private float directionThreshold = 0.9f;
 
-        public System.Action OnSwipeLeft;
-        public System.Action OnSwipeRight;
-        public System.Action OnSwipeUp;
-        public System.Action OnSwipeDown;
+        public Action OnSwipeLeft;
+        public Action OnSwipeRight;
+        public Action OnSwipeUp;
+        public Action OnSwipeDown;
 
         private InputSystemActions _inputSystem;
-
-        public void SetDataGetter(InputData inputData) => this._inputData = inputData;
+        
 
         public void Initialize()
         {
