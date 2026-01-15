@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace Input
 {
     [System.Serializable]
@@ -32,12 +33,45 @@ namespace Input
             _inputSystem.Enable();
 
             // Підписка на події
+#if UNITY_EDITOR
+            
+            _inputSystem.Player.Move.started += PCMove;
+#endif
             _inputSystem.PlayerTouch.TouchPress.started += OnTouchStarted;
             _inputSystem.PlayerTouch.TouchPress.canceled += OnTouchEnded;
 
             Debug.Log("✓ PlayerInput ініціалізовано");
             Debug.Log($"TouchPress enabled: {_inputSystem.PlayerTouch.TouchPress.enabled}");
             Debug.Log($"TouchPosition enabled: {_inputSystem.PlayerTouch.TouchPosition.enabled}");
+        }
+
+        private void PCMove(InputAction.CallbackContext obj)
+        {
+         Vector2 vector=   obj.ReadValue<Vector2>();
+
+         if (vector.x != 0)
+         {
+             if (vector.x > 0)
+             {
+                 OnSwipeRight?.Invoke();
+             }
+             else
+             {
+                 OnSwipeLeft?.Invoke();
+             }
+         }
+
+         if (vector.y != 0)
+         {
+             if (vector.y > 0)
+             {
+                 OnSwipeUp?.Invoke();
+             }
+             else
+             {
+                 OnSwipeDown?.Invoke();
+             }
+         }
         }
 
         private void OnTouchStarted(InputAction.CallbackContext context)

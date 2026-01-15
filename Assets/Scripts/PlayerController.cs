@@ -8,7 +8,10 @@ public class PlayerController : MonoBehaviour,IActivity
     void Start()
     {
         input.Initialize();
-        
+        input.OnSwipeDown += Rift;
+        input.OnSwipeUp += Jump;
+        input.OnSwipeLeft += Left;
+        input.OnSwipeRight += Right;
     }
 
 
