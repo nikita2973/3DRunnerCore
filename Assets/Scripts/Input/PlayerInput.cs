@@ -47,7 +47,7 @@ namespace Input
 
         private void PCMove(InputAction.CallbackContext obj)
         {
-         Vector2 vector=   obj.ReadValue<Vector2>();
+         Vector2 vector=obj.ReadValue<Vector2>();
 
          if (vector.x != 0)
          {
