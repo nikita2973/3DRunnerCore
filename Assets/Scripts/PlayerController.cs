@@ -1,3 +1,4 @@
+using System.Collections;
 using Input;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PlayerController : MonoBehaviour, IActivity
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private PlayerInput _input;
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Animator _animator;
     
     // Параметри доріжок
     [SerializeField] private float _laneDistance = 3f; // Відстань між доріжками
@@ -80,6 +82,7 @@ public class PlayerController : MonoBehaviour, IActivity
     {
         if (_isGrounded && !_isSliding)
         {
+            _animator.SetTrigger("Jump");
             _verticalVelocity = _playerData.JumpForce;
         }
     }
@@ -88,6 +91,7 @@ public class PlayerController : MonoBehaviour, IActivity
     {
         if (_isGrounded && !_isSliding)
         {
+            _animator.SetTrigger("Slide");
             StartSlide();
         }
     }
@@ -96,6 +100,7 @@ public class PlayerController : MonoBehaviour, IActivity
     {
         if (_currentLane > 0)
         {
+            _animator.SetTrigger("Left");
             _currentLane--;
             UpdateTargetPosition();
         }
@@ -105,16 +110,14 @@ public class PlayerController : MonoBehaviour, IActivity
     {
         if (_currentLane < 2)
         {
+            _animator.SetTrigger("Right");
             _currentLane++;
             UpdateTargetPosition();
         }
     }
     
-    private void UpdateTargetPosition()
-    {
-        _targetXPosition = (_currentLane - 1) * _laneDistance;
-    }
-    
+    private void UpdateTargetPosition() => _targetXPosition = (_currentLane - 1) * _laneDistance;
+
     private void StartSlide()
     {
         _isSliding = true;
